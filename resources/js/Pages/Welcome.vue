@@ -39,7 +39,7 @@ const show = reactive({
     <Head title="Welcome"/>
 
     <div
-        class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
+        class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 items-center sm:pt-0">
         <!-- <div v-if="canLogin" class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
              <Link v-if="$page.props.user" :href="route('dashboard')"
                    class="text-sm text-gray-700 dark:text-gray-200 underline">Dashboard
@@ -53,8 +53,8 @@ const show = reactive({
              </template>
         </div>-->
         <Transition name="fade">
-            <div class="select-none bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl shadow-lg shadow-blue-500 border-gray-100 border-4" v-if="show.box">
-                <div class="mx-auto max-w-2xl py-16 px-4 text-center sm:py-20 sm:px-6 lg:px-8 transition-all duration-200" :class="show.boxExpand ? 'h-72' : 'h-56'">
+            <div class="select-none bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl shadow-lg shadow-blue-500 border-gray-100 border-4 mx-12 py-16" v-if="show.box">
+                <div class="mx-auto max-w-2xl px-4 text-center sm:px-6 lg:px-8 transition-all duration-200" :class="show.boxExpand ? 'h-32' : 'h-16'">
                     <h2 class="text-3xl font-extrabold tracking-tight text-white sm:text-7xl">
                         <span class="text-transparent bg-clip-text bg-gradient-to-r from-gray-100 to-gray-300" v-text="applicationName"/>
                     </h2>
