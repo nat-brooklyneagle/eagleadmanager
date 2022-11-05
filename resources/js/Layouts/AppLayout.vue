@@ -52,6 +52,9 @@ const logout = () => {
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
+                                <NavLink :href="route('advertisers.index')" :active="route().current('advertisers.index')">
+                                    Advertisers
+                                </NavLink>
                             </div>
                         </div>
 
@@ -232,7 +235,7 @@ const logout = () => {
                     </div>
 
                     <!-- Responsive Settings Options -->
-                    <div class="pt-4 pb-1 border-t border-gray-200">
+                    <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
                         <div class="flex items-center px-4">
                             <div v-if="$page.props.jetstream.managesProfilePhotos" class="shrink-0 mr-3">
                                 <img class="h-10 w-10 rounded-full object-cover" :src="$page.props.user.profile_photo_url" :alt="$page.props.user.name">
@@ -265,7 +268,7 @@ const logout = () => {
                             </form>
                             <!-- Team Management -->
                             <template v-if="$page.props.jetstream.hasTeamFeatures && $page.props.user.isMemberOfATeam">
-                                <div class="border-t border-gray-200" />
+                                <div class="border-t border-gray-200 dark:border-gray-600" />
 
                                 <div class="block px-4 py-2 text-xs text-gray-400">
                                     Manage Team
@@ -280,7 +283,7 @@ const logout = () => {
                                     Create New Team
                                 </ResponsiveNavLink>
 
-                                <div class="border-t border-gray-200" />
+                                <div class="border-t border-gray-200 dark:border-gray-600" />
 
                                 <!-- Team Switcher -->
                                 <div class="block px-4 py-2 text-xs text-gray-400">

@@ -108,7 +108,7 @@ const displayableRole = (role) => {
 
                 <template #form>
                     <div class="col-span-6">
-                        <div class="max-w-xl text-sm text-gray-600">
+                        <div class="max-w-xl text-sm text-gray-600 dark:text-gray-400">
                             Please provide the email address of the person you would like to add to this team.
                         </div>
                     </div>
@@ -136,13 +136,13 @@ const displayableRole = (role) => {
                                 :key="role.key"
                                 type="button"
                                 class="relative px-4 py-3 inline-flex w-full rounded-lg focus:z-10 focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200"
-                                :class="{'border-t border-gray-200 rounded-t-none': i > 0, 'rounded-b-none': i != Object.keys(availableRoles).length - 1}"
+                                :class="{'border-t border-gray-200 dark:border-gray-600 rounded-t-none': i > 0, 'rounded-b-none': i != Object.keys(availableRoles).length - 1}"
                                 @click="addTeamMemberForm.role = role.key"
                             >
                                 <div :class="{'opacity-50': addTeamMemberForm.role && addTeamMemberForm.role != role.key}">
                                     <!-- Role Name -->
                                     <div class="flex items-center">
-                                        <div class="text-sm text-gray-600" :class="{'font-semibold': addTeamMemberForm.role == role.key}">
+                                        <div class="text-sm text-gray-600 dark:text-gray-400" :class="{'font-semibold': addTeamMemberForm.role == role.key}">
                                             {{ role.name }}
                                         </div>
 
@@ -159,7 +159,7 @@ const displayableRole = (role) => {
                                     </div>
 
                                     <!-- Role Description -->
-                                    <div class="mt-2 text-xs text-gray-600 text-left">
+                                    <div class="mt-2 text-xs text-gray-600 dark:text-gray-400 text-left">
                                         {{ role.description }}
                                     </div>
                                 </div>
@@ -287,13 +287,13 @@ const displayableRole = (role) => {
 
             <template #content>
                 <div v-if="managingRoleFor">
-                    <div class="relative z-0 mt-1 border border-gray-200 rounded-lg cursor-pointer">
+                    <div class="relative z-0 mt-1 border border-gray-200 dark:border-gray-600 rounded-lg cursor-pointer">
                         <button
                             v-for="(role, i) in availableRoles"
                             :key="role.key"
                             type="button"
                             class="relative px-4 py-3 inline-flex w-full rounded-lg focus:z-10 focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200"
-                            :class="{'border-t border-gray-200 rounded-t-none': i > 0, 'rounded-b-none': i !== Object.keys(availableRoles).length - 1}"
+                            :class="{'border-t border-gray-200 dark:border-gray-600 rounded-t-none': i > 0, 'rounded-b-none': i !== Object.keys(availableRoles).length - 1}"
                             @click="updateRoleForm.role = role.key"
                         >
                             <div :class="{'opacity-50': updateRoleForm.role && updateRoleForm.role !== role.key}">
