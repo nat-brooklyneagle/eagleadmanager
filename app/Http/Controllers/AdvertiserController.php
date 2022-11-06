@@ -3,8 +3,10 @@
     namespace App\Http\Controllers;
 
     use App\Models\Advertiser;
+    use Illuminate\Auth\Access\AuthorizationException;
     use Illuminate\Http\RedirectResponse;
     use Illuminate\Http\Request;
+    use Illuminate\Support\Facades\Auth;
     use Illuminate\Support\Facades\Redirect;
     use Inertia\Inertia;
     use Inertia\Response;
@@ -13,18 +15,39 @@
     {
         /**
          * Display a listing of the resource.
+         * @throws AuthorizationException
          */
         public function index(): Response
         {
-            return Inertia::render('Advertisers/Index',
-                ['advertisers' => Advertiser::all()]);
+            $this->authorize('viewAny', Advertiser::class);
+            /** @noinspection PhpUndefinedFieldInspection */
+            $currentTeam = Auth::user()->currentTeam;
+            $advertisers = $currentTeam?->advertisers()->get();
+            $canCreateAdvertiser = false;
+            if(!is_null($currentTeam)) {
+                $canCreateAdvertiser = $this->authorize('create', Advertiser::class);
+            }
+            $permissions =  compact('canCreateAdvertiser');
+            /*[
+                    'canAddTeamMembers' => Gate::check('addTeamMember', $team),
+                    'canDeleteTeam' => Gate::check('delete', $team),
+                    'canRemoveTeamMembers' => Gate::check('removeTeamMember', $team),
+                    'canUpdateTeam' => Gate::check('update', $team),
+            ];*/
+            return Inertia::render('Advertisers/Index', compact(
+                'advertisers',
+                'permissions'
+            ));
         }
 
         /**
          * Show the form for creating a new resource.
+         * @throws AuthorizationException
          */
         public function create(): Response
         {
+            $this->authorize('create', Advertiser::class);
+
             return Inertia::render('Advertisers/Create');
         }
 
@@ -33,47 +56,61 @@
          */
         public function store(Request $request): RedirectResponse
         {
-            $advertiser = Advertiser::create([
-                'first_name' => $request->input('first_name'),
-                'last_name' => $request->input('last_name'),
-            ]);
-
-            info('you deserve a raise', ['request' => $request->all()]);
+            $team_id = auth()->user()->current_team_id;
+            $first_name = $request->input('first_name');
+            $last_name = $request->input('last_name');
+            /** @noinspection PhpUndefinedMethodInspection */
+            $advertiser = Advertiser::create(compact('first_name',
+            'last_name', 'team_id'));
 
             return Redirect::route('advertisers.show', ['advertiser' => $advertiser]);
         }
 
         /**
          * Display the specified resource.
+         * @throws AuthorizationException
          */
         public function show(Advertiser $advertiser): Response
         {
-            return Inertia::render('Advertisers/Show', [
-                'advertiser' => $advertiser
-            ]);
+            /** @noinspection PhpUndefinedFieldInspection */
+            $currentTeam = Auth::user()->currentTeam;
+            $canEditAdvertiser = false;
+            if(!is_null($currentTeam)) {
+                $canEditAdvertiser = $this->authorize('update', $advertiser);
+            }
+            $permissions =  compact('canEditAdvertiser');
+
+            return Inertia::render('Advertisers/Show', compact(
+                'advertiser',
+                'permissions'
+            ));
         }
 
         /**
          * Show the form for editing the specified resource.
          *
-         * @param int $id
-         * @return \Illuminate\Http\Response
+         * @throws AuthorizationException
          */
-        public function edit($id)
+        public function edit(Advertiser $advertiser): Response
         {
-            //
+            $this->authorize('update', $advertiser);
+
+            return Inertia::render('Advertisers/Edit', compact('advertiser'));
         }
 
         /**
          * Update the specified resource in storage.
-         *
-         * @param \Illuminate\Http\Request $request
-         * @param int $id
-         * @return \Illuminate\Http\Response
+         * @throws AuthorizationException
          */
-        public function update(Request $request, $id)
+        public function update(Request $request, Advertiser $advertiser)
         {
-            //
+            $this->authorize('update', $advertiser);
+            $advertiser->update([
+                'first_name' => $request->input('first_name'),
+                'last_name' => $request->input('last_name'),
+            ]);
+
+            return Redirect::route('advertisers.show', ['advertiser' => $advertiser]);
         }
 
         /**
@@ -81,7 +118,6 @@
          */
         public function destroy(Advertiser $advertiser): RedirectResponse
         {
-            info('almost there...', compact('advertiser'));
             $advertiser->delete();
 
             return Redirect::route('advertisers.index');

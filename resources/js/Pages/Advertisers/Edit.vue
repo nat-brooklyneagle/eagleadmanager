@@ -8,16 +8,22 @@ import TextInput from '@/Components/TextInput.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SectionBorder from '@/Components/SectionBorder.vue';
 
-const addAdvertiserForm = useForm({
-    first_name: '',
-    last_name: '',
+
+const props = defineProps({
+    advertiser: Object,
+});
+const advertiser = props.advertiser;
+
+const updateAdvertiserForm = useForm({
+    first_name: props.advertiser.first_name,
+    last_name: props.advertiser.last_name,
 });
 
-const addAdvertiser = () => {
-    addAdvertiserForm.post(route('advertisers.store'), {
-        errorBag: 'addAdvertiser',
+const updateAdvertiser = () => {
+    updateAdvertiserForm.patch(route('advertisers.update', {advertiser}), {
+        errorBag: 'updateAdvertiser',
         preserveScroll: true,
-        onSuccess: () => addAdvertiserForm.reset(),
+        onSuccess: () => updateAdvertiserForm.reset(),
     });
 };
 
@@ -27,7 +33,7 @@ const addAdvertiser = () => {
     <AppLayout title="Dashboard">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                Create Advertiser
+                Edit Advertiser
             </h2>
         </template>
 
@@ -36,13 +42,13 @@ const addAdvertiser = () => {
                 <div class="bg-white dark:bg-gray-900 overflow-hidden sm:rounded-lg">
                     <!--                    <Welcome />-->
                     <SectionBorder />
-                    <FormSection @submitted="addAdvertiser">
+                    <FormSection @submitted="updateAdvertiser">
                         <template #title>
-                            Add Advertiser
+                            Edit Advertiser
                         </template>
 
                         <template #description>
-                            Add a new advertiser.
+                            Update this advertiser.
                         </template>
                         <template #form>
                             <div class="col-span-6">
@@ -57,12 +63,12 @@ const addAdvertiser = () => {
                                 <TextInput
                                     id="first_name"
                                     ref="first_name"
-                                    v-model="addAdvertiserForm.first_name"
+                                    v-model="updateAdvertiserForm.first_name"
                                     type="text"
                                     class="mt-1 block w-full"
                                     autofocus
                                 />
-                                <InputError :message="addAdvertiserForm.errors.first_name" class="mt-2"/>
+                                <InputError :message="updateAdvertiserForm.errors.first_name" class="mt-2"/>
                             </div>
 
                             <!-- Advertiser Last Name -->
@@ -71,16 +77,16 @@ const addAdvertiser = () => {
                                 <TextInput
                                     id="last_name"
                                     ref="last_name"
-                                    v-model="addAdvertiserForm.last_name"
+                                    v-model="updateAdvertiserForm.last_name"
                                     type="text"
                                     class="mt-1 block w-full"
                                 />
-                                <InputError :message="addAdvertiserForm.errors.last_name" class="mt-2"/>
+                                <InputError :message="updateAdvertiserForm.errors.last_name" class="mt-2"/>
                             </div>
                         </template>
 
                         <template #actions>
-                            <PrimaryButton :class="{ 'opacity-25': addAdvertiserForm.processing }" :disabled="addAdvertiserForm.processing">
+                            <PrimaryButton :class="{ 'opacity-25': updateAdvertiserForm.processing }" :disabled="updateAdvertiserForm.processing">
                                 Save
                             </PrimaryButton>
                         </template>

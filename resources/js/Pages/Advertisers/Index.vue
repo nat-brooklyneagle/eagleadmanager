@@ -1,6 +1,10 @@
 <script setup>
 import {Link} from '@inertiajs/inertia-vue3';
-import AppLayout from '@/Layouts/AppLayout.vue';</script>
+import AppLayout from '@/Layouts/AppLayout.vue';
+const props = defineProps({
+    permissions: Object,
+});
+</script>
 
 <template>
     <AppLayout title="Dashboard">
@@ -10,15 +14,17 @@ import AppLayout from '@/Layouts/AppLayout.vue';</script>
                     Advertisers
                 </h2>
                 <div class="text-right">
-                    <Link :href="route('advertisers.create')"
-                          title="Create Advertiser"
-                          class="dark:text-white inline-flex w-full items-center justify-center rounded-md border border-transparent bg-white dark:bg-gray-700 px-4 py-2 text-base font-medium text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-500 sm:w-auto">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                             stroke="currentColor" class="w-6 h-6 mr-2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
-                        </svg>
-                        Create
-                    </Link>
+                    <template v-if="permissions.canCreateAdvertiser">
+                        <Link :href="route('advertisers.create')"
+                              title="Create Advertiser"
+                              class="dark:text-white inline-flex w-full items-center justify-center rounded-md border border-transparent bg-white dark:bg-gray-700 px-4 py-2 text-base font-medium text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-500 sm:w-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor" class="w-6 h-6 mr-2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+                            </svg>
+                            Create
+                        </Link>
+                    </template>
                 </div>
             </div>
         </template>

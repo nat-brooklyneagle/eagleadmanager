@@ -1,7 +1,7 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
-import { Head, Link } from '@inertiajs/inertia-vue3';
+import { Head, Link, usePage } from '@inertiajs/inertia-vue3';
 import ApplicationMark from '@/Components/ApplicationMark.vue';
 import Banner from '@/Components/Banner.vue';
 import Dropdown from '@/Components/Dropdown.vue';
@@ -11,6 +11,7 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 
 defineProps({
     title: String,
+    permissions: Object,
 });
 
 const showingNavigationDropdown = ref(false);
@@ -26,6 +27,8 @@ const switchToTeam = (team) => {
 const logout = () => {
     Inertia.post(route('logout'));
 };
+const canViewAdvertisers = computed(() => usePage().props.value.canViewAdvertisers)
+
 </script>
 
 <template>
@@ -52,9 +55,11 @@ const logout = () => {
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
-                                <NavLink :href="route('advertisers.index')" :active="route().current('advertisers.index')">
-                                    Advertisers
-                                </NavLink>
+                                <template v-if="canViewAdvertisers">
+                                    <NavLink :href="route('advertisers.index')" :active="route().current('advertisers.index')">
+                                        Advertisers
+                                    </NavLink>
+                                </template>
                             </div>
                         </div>
 

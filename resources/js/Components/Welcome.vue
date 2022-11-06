@@ -3,6 +3,8 @@ import {Head, Link, usePage} from '@inertiajs/inertia-vue3';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import { computed } from 'vue'
 const appName = computed(() => usePage().props.value.appName)
+const canViewAdvertisers = computed(() => usePage().props.value.canViewAdvertisers)
+
 </script>
 
 <template>
@@ -25,6 +27,8 @@ const appName = computed(() => usePage().props.value.appName)
         </div>
 
         <div class="bg-gray-200 dark:bg-gray-800 bg-opacity-25 grid grid-cols-1 md:grid-cols-2">
+
+            <template v-if="canViewAdvertisers">
             <div class="p-6">
                 <div class="flex items-center">
                     <svg
@@ -57,7 +61,8 @@ const appName = computed(() => usePage().props.value.appName)
                             <div class="ml-1 text-indigo-500">
                                 <svg viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
                             </div>
-                        </div></Link>
+                        </div>
+                    </Link>
                 </div>
             </div>
 
@@ -93,6 +98,7 @@ const appName = computed(() => usePage().props.value.appName)
                     </a>
                 </div>-->
             </div>
+            </template>
 
             <div class="p-6 border-t border-gray-200 dark:border-gray-600">
 <!--                <div class="flex items-center">

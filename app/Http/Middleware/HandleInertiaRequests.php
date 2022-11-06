@@ -2,7 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Advertiser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
 
@@ -18,21 +20,16 @@ class HandleInertiaRequests extends Middleware
     /**
      * Determine the current asset version.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return string|null
      */
-    public function version(Request $request)
+    public function version(Request $request): ?string
     {
         return parent::version($request);
     }
 
     /**
      * Define the props that are shared by default.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
      */
-    public function share(Request $request)
+    public function share(Request $request): array
     {
         return array_merge(parent::share($request), [
             'ziggy' => function () use ($request) {
@@ -41,6 +38,7 @@ class HandleInertiaRequests extends Middleware
                 ]);
             },
             'appName' => config('app.name'),
+            'canViewAdvertisers' => Gate::forUser($request->user())->allows('viewAny', Advertiser::class),
         ]);
     }
 }
