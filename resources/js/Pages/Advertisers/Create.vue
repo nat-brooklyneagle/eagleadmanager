@@ -11,6 +11,7 @@ import SectionBorder from '@/Components/SectionBorder.vue';
 const addAdvertiserForm = useForm({
     first_name: '',
     last_name: '',
+    email_address: '',
 });
 
 const addAdvertiser = () => {
@@ -76,6 +77,19 @@ const addAdvertiser = () => {
                                     class="mt-1 block w-full"
                                 />
                                 <InputError :message="addAdvertiserForm.errors.last_name" class="mt-2"/>
+                            </div>
+
+                            <!-- Advertiser Email Address -->
+                            <div class="col-span-6 sm:col-span-4">
+                                <InputLabel for="email_address" value="Email Address"/>
+                                <TextInput
+                                    id="email_address"
+                                    ref="email_address"
+                                    v-model="addAdvertiserForm.email_address"
+                                    type="email"
+                                    class="mt-1 block w-full"
+                                />
+                                <InputError :message="addAdvertiserForm.errors.email_address" class="mt-2"/>
                             </div>
                         </template>
 

@@ -36,12 +36,15 @@ const props = defineProps({
 
 
                     <div class="p-8">
-                        <template v-for="advertiser in $page.props.advertisers">
+                        <template v-if="$page.props.advertisers.length > 0" v-for="advertiser in $page.props.advertisers">
                             <div>
                                 <Link :href="route('advertisers.show', {'advertiser': advertiser})">
                                     {{ advertiser.full_name }}
                                 </Link>
                             </div>
+                        </template>
+                        <template v-else>
+                            No Advertisers.
                         </template>
                     </div>
                 </div>

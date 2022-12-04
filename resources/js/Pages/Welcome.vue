@@ -1,6 +1,7 @@
 <script setup>
 import {Head, Link} from '@inertiajs/inertia-vue3';
 import {onMounted, reactive} from 'vue'
+import Banner from '@/Components/Banner.vue';
 
 defineProps({
     canLogin: Boolean,
@@ -54,6 +55,7 @@ const show = reactive({
         </div>-->
         <Transition name="fade">
             <div class="select-none bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl shadow-lg shadow-blue-500 border-gray-100 border-4 mx-12 py-16" v-if="show.box">
+                <Banner />
                 <div class="mx-auto max-w-2xl px-4 text-center sm:px-6 lg:px-8 transition-all duration-200" :class="show.boxExpand ? 'h-32' : 'h-16'">
                     <h2 class="text-3xl font-extrabold tracking-tight text-white sm:text-7xl">
                         <span class="text-transparent bg-clip-text bg-gradient-to-r from-gray-100 to-gray-300" v-text="applicationName"/>

@@ -52,9 +52,22 @@ const deleteAdvertiser = () => {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg p-12">
 <!--                    <Welcome />-->
-
-
                     Advertiser information for {{$page.props.advertiser.first_name}} will appear here.
+
+                    <div>
+                    Email Addresses
+                    <template v-if="$page.props.email_addresses.length > 0" v-for="email_address in $page.props.email_addresses">
+                        <div>
+<!--                            <Link :href="route('advertisers.show', {'advertiser': advertiser})">-->
+                                {{ email_address.email_address }}
+<!--                            </Link>-->
+                        </div>
+                    </template>
+                    <template v-else>
+                        No Email Addresses.
+                    </template>
+                    <div></div>
+                    </div>
                 </div>
                 <template v-if="true">
                     <div class="my-20">

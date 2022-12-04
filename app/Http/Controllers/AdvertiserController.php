@@ -3,6 +3,7 @@
     namespace App\Http\Controllers;
 
     use App\Models\Advertiser;
+    use App\Models\EmailAddress;
     use Illuminate\Auth\Access\AuthorizationException;
     use Illuminate\Http\RedirectResponse;
     use Illuminate\Http\Request;
@@ -23,11 +24,12 @@
             /** @noinspection PhpUndefinedFieldInspection */
             $currentTeam = Auth::user()->currentTeam;
             $advertisers = $currentTeam?->advertisers()->get();
+//            dd($advertisers);
             $canCreateAdvertiser = false;
             if(!is_null($currentTeam)) {
                 $canCreateAdvertiser = $this->authorize('create', Advertiser::class);
             }
-            $permissions =  compact('canCreateAdvertiser');
+            $permissions = compact('canCreateAdvertiser');
             /*[
                     'canAddTeamMembers' => Gate::check('addTeamMember', $team),
                     'canDeleteTeam' => Gate::check('delete', $team),
@@ -63,6 +65,12 @@
             $advertiser = Advertiser::create(compact('first_name',
             'last_name', 'team_id'));
 
+            if($request->has('email_address')) {
+                $email_address = EmailAddress::firstOrCreate(['email_address' => $request->input('email_address')]);
+                $advertiser->email_addresses()->save($email_address, [
+                    'created_by' => $request->user()->id
+                ]);
+            }
             return Redirect::route('advertisers.show', ['advertiser' => $advertiser]);
         }
 
@@ -78,11 +86,15 @@
             if(!is_null($currentTeam)) {
                 $canEditAdvertiser = $this->authorize('update', $advertiser);
             }
-            $permissions =  compact('canEditAdvertiser');
+            $permissions = compact('canEditAdvertiser');
+
+
+            $email_addresses = $advertiser->email_addresses;
 
             return Inertia::render('Advertisers/Show', compact(
                 'advertiser',
-                'permissions'
+                'permissions',
+                'email_addresses',
             ));
         }
 

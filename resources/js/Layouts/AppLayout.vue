@@ -67,7 +67,7 @@ const canViewAdvertisers = computed(() => usePage().props.value.canViewAdvertise
                             <div class="ml-3 relative">
                                 <!-- Teams Dropdown -->
 <!--                                isMemberOfATeam: {{$page.props.jetstream.isMemberOfATeam ? 'true' : 'false'}}<br />hasTeamFeatures: {{$page.props.jetstream.hasTeamFeatures ? 'true' : 'false'}}-->
-                                <Dropdown v-if="$page.props.jetstream.hasTeamFeatures" align="right" width="60">
+                                <Dropdown v-if="$page.props.jetstream.hasTeamFeatures && ($page.props.user.isMemberOfATeam || $page.props.jetstream.canCreateTeams)" align="right" width="60">
                                     <template #trigger v-if="$page.props.user.current_team" >
                                         <span class="inline-flex rounded-md">
                                             <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-500 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-black hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-900 active:bg-gray-50 transition">

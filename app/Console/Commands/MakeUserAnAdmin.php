@@ -35,7 +35,9 @@ class MakeUserAnAdmin extends Command
             return parent::FAILURE;
         }
 
-        $email_address_string = $this->ask('Enter the email address of the user you want to make an admin:');
+        $user_email_addresses = User::select('email')->pluck('email');
+
+        $email_address_string = $this->anticipate('Enter the email address of the user you want to make an admin:', $user_email_addresses);
 
         if(Validator::make(['email' => $email_address_string], [
             'email' => 'exists:App\Models\User,email',
