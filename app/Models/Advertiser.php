@@ -23,8 +23,15 @@ class Advertiser extends Model
 
     protected $fillable = [
         'team_id',
+        'company_name',
         'first_name',
         'last_name',
+        'company_name',
+        'address',
+        'address2',
+        'city',
+        'state',
+        'zip',
     ];
 
     protected $appends = [
@@ -46,7 +53,10 @@ class Advertiser extends Model
     protected function fullName(): Attribute
     {
         return Attribute::make(
-            get: fn () => trim("$this->first_name $this->last_name"),
+            get: function () {
+                $fullName = trim("$this->first_name $this->last_name");
+                return !empty($fullName) ? $fullName : "n/a";
+            },
         );
     }
 

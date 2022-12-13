@@ -9,9 +9,15 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SectionBorder from '@/Components/SectionBorder.vue';
 
 const addAdvertiserForm = useForm({
+    company_name: '',
     first_name: '',
     last_name: '',
     email_address: '',
+    address: '',
+    address2: '',
+    city: '',
+    state: '',
+    zip: '',
 });
 
 const addAdvertiser = () => {
@@ -52,6 +58,20 @@ const addAdvertiser = () => {
                                 </div>
                             </div>
 
+                            <!-- Advertiser Company Name -->
+                            <div class="col-span-6 sm:col-span-4">
+                                <InputLabel for="company_name" value="Company Name"/>
+                                <TextInput
+                                    id="company_name"
+                                    ref="company_name"
+                                    v-model="addAdvertiserForm.company_name"
+                                    type="text"
+                                    class="mt-1 block w-full"
+                                    autofocus
+                                />
+                                <InputError :message="addAdvertiserForm.errors.company_name" class="mt-2"/>
+                            </div>
+
                             <!-- Advertiser First Name -->
                             <div class="col-span-6 sm:col-span-4">
                                 <InputLabel for="first_name" value="First Name"/>
@@ -77,6 +97,71 @@ const addAdvertiser = () => {
                                     class="mt-1 block w-full"
                                 />
                                 <InputError :message="addAdvertiserForm.errors.last_name" class="mt-2"/>
+                            </div>
+
+                            <!-- Advertiser Address -->
+                            <div class="col-span-6 sm:col-span-4">
+                                <InputLabel for="address" value="Address"/>
+                                <TextInput
+                                    id="address"
+                                    ref="address"
+                                    v-model="addAdvertiserForm.address"
+                                    type="text"
+                                    class="mt-1 block w-full"
+                                />
+                                <InputError :message="addAdvertiserForm.errors.address" class="mt-2"/>
+                            </div>
+
+                            <!-- Advertiser Address 2 -->
+                            <div class="col-span-6 sm:col-span-4">
+                                <InputLabel for="address2" value="Address 2"/>
+                                <TextInput
+                                    id="address2"
+                                    ref="address2"
+                                    v-model="addAdvertiserForm.address2"
+                                    type="text"
+                                    class="mt-1 block w-full"
+                                />
+                                <InputError :message="addAdvertiserForm.errors.address2" class="mt-2"/>
+                            </div>
+
+                            <!-- Advertiser City -->
+                            <div class="col-span-6 sm:col-span-4">
+                                <InputLabel for="last_name" value="City"/>
+                                <TextInput
+                                    id="city"
+                                    ref="city"
+                                    v-model="addAdvertiserForm.city"
+                                    type="text"
+                                    class="mt-1 block w-full"
+                                />
+                                <InputError :message="addAdvertiserForm.errors.city" class="mt-2"/>
+                            </div>
+
+                            <!-- Advertiser State -->
+                            <div class="col-span-6 sm:col-span-4">
+                                <InputLabel for="state" value="State"/>
+                                <TextInput
+                                    id="state"
+                                    ref="state"
+                                    v-model="addAdvertiserForm.state"
+                                    type="text"
+                                    class="mt-1 block w-full"
+                                />
+                                <InputError :message="addAdvertiserForm.errors.state" class="mt-2"/>
+                            </div>
+
+                            <!-- Advertiser Zip -->
+                            <div class="col-span-6 sm:col-span-4">
+                                <InputLabel for="state" value="Zip"/>
+                                <TextInput
+                                    id="zip"
+                                    ref="zip"
+                                    v-model="addAdvertiserForm.zip"
+                                    type="text"
+                                    class="mt-1 block w-full"
+                                />
+                                <InputError :message="addAdvertiserForm.errors.zip" class="mt-2"/>
                             </div>
 
                             <!-- Advertiser Email Address -->

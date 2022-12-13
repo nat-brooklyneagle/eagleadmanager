@@ -15,8 +15,14 @@ const props = defineProps({
 const advertiser = props.advertiser;
 
 const updateAdvertiserForm = useForm({
+    company_name: props.advertiser.company_name,
     first_name: props.advertiser.first_name,
     last_name: props.advertiser.last_name,
+    address: props.advertiser.address,
+    address2: props.advertiser.address2,
+    city: props.advertiser.city,
+    state: props.advertiser.state,
+    zip: props.advertiser.zip,
 });
 
 const updateAdvertiser = () => {
@@ -57,6 +63,20 @@ const updateAdvertiser = () => {
                                 </div>
                             </div>
 
+                            <!-- Advertiser Company Name -->
+                            <div class="col-span-6 sm:col-span-4">
+                                <InputLabel for="company_name" value="Company Name"/>
+                                <TextInput
+                                    id="company_name"
+                                    ref="company_name"
+                                    v-model="updateAdvertiserForm.company_name"
+                                    type="text"
+                                    class="mt-1 block w-full"
+                                    autofocus
+                                />
+                                <InputError :message="updateAdvertiserForm.errors.company_name" class="mt-2"/>
+                            </div>
+
                             <!-- Advertiser First Name -->
                             <div class="col-span-6 sm:col-span-4">
                                 <InputLabel for="first_name" value="First Name"/>
@@ -82,6 +102,71 @@ const updateAdvertiser = () => {
                                     class="mt-1 block w-full"
                                 />
                                 <InputError :message="updateAdvertiserForm.errors.last_name" class="mt-2"/>
+                            </div>
+
+                            <!-- Advertiser Address -->
+                            <div class="col-span-6 sm:col-span-4">
+                                <InputLabel for="address" value="Address"/>
+                                <TextInput
+                                    id="address"
+                                    ref="address"
+                                    v-model="updateAdvertiserForm.address"
+                                    type="text"
+                                    class="mt-1 block w-full"
+                                />
+                                <InputError :message="updateAdvertiserForm.errors.address" class="mt-2"/>
+                            </div>
+
+                            <!-- Advertiser Address 2 -->
+                            <div class="col-span-6 sm:col-span-4">
+                                <InputLabel for="address2" value="Address 2"/>
+                                <TextInput
+                                    id="address2"
+                                    ref="address2"
+                                    v-model="updateAdvertiserForm.address2"
+                                    type="text"
+                                    class="mt-1 block w-full"
+                                />
+                                <InputError :message="updateAdvertiserForm.errors.address2" class="mt-2"/>
+                            </div>
+
+                            <!-- Advertiser City -->
+                            <div class="col-span-6 sm:col-span-4">
+                                <InputLabel for="last_name" value="City"/>
+                                <TextInput
+                                    id="city"
+                                    ref="city"
+                                    v-model="updateAdvertiserForm.city"
+                                    type="text"
+                                    class="mt-1 block w-full"
+                                />
+                                <InputError :message="updateAdvertiserForm.errors.city" class="mt-2"/>
+                            </div>
+
+                            <!-- Advertiser State -->
+                            <div class="col-span-6 sm:col-span-4">
+                                <InputLabel for="state" value="State"/>
+                                <TextInput
+                                    id="state"
+                                    ref="state"
+                                    v-model="updateAdvertiserForm.state"
+                                    type="text"
+                                    class="mt-1 block w-full"
+                                />
+                                <InputError :message="updateAdvertiserForm.errors.state" class="mt-2"/>
+                            </div>
+
+                            <!-- Advertiser Zip -->
+                            <div class="col-span-6 sm:col-span-4">
+                                <InputLabel for="state" value="Zip"/>
+                                <TextInput
+                                    id="zip"
+                                    ref="zip"
+                                    v-model="updateAdvertiserForm.zip"
+                                    type="text"
+                                    class="mt-1 block w-full"
+                                />
+                                <InputError :message="updateAdvertiserForm.errors.zip" class="mt-2"/>
                             </div>
                         </template>
 

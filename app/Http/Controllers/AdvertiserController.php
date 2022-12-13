@@ -59,13 +59,26 @@
         public function store(Request $request): RedirectResponse
         {
             $team_id = auth()->user()->current_team_id;
+            $company_name = $request->input('company_name');
             $first_name = $request->input('first_name');
             $last_name = $request->input('last_name');
+            $address = $request->input('address');
+            $address2 = $request->input('address2');
+            $city = $request->input('city');
+            $state = $request->input('state');
+            $zip = $request->input('zip');
             /** @noinspection PhpUndefinedMethodInspection */
             $advertiser = Advertiser::create(compact('first_name',
-            'last_name', 'team_id'));
+            'last_name', 'team_id',
+            'company_name',
+            'address',
+            'address2',
+            'city',
+            'state',
+            'zip',
+            ));
 
-            if($request->has('email_address')) {
+            if($request->filled('email_address')) {
                 $email_address = EmailAddress::firstOrCreate(['email_address' => $request->input('email_address')]);
                 $advertiser->email_addresses()->save($email_address, [
                     'created_by' => $request->user()->id
@@ -120,6 +133,12 @@
             $advertiser->update([
                 'first_name' => $request->input('first_name'),
                 'last_name' => $request->input('last_name'),
+                'company_name' => $request->input('company_name'),
+                'address' => $request->input('address'),
+                'address2' => $request->input('address2'),
+                'city' => $request->input('city'),
+                'state' => $request->input('state'),
+                'zip' => $request->input('zip'),
             ]);
 
             return Redirect::route('advertisers.show', ['advertiser' => $advertiser]);
